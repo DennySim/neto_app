@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coolapp-deployment
+  labels:
+    app: coolapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: coolapp
+  template:
+    metadata:
+      labels:
+        app: coolapp
+    spec:
+      containers:
+      - name: coolapp
+        imagePullPolicy: Always
+        image: registry_url
+        ports:
+        - containerPort: 80
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coolapp-service
+spec:
+  selector:
+    app: coolapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer 
